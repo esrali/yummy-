@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy</title>
+    <link
+    rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="loadingDiv">
+        <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
+    </div>
+    <div class="sidebar d-flex justify-content-between ">
+        <div class="links me-sm-0 me-lg-5 me-md-0">
+            <ul class="py-4">
+                <li class=" animate__animated "><a href="#" id="Search">Search</a></li>
+                <li class=" animate__animated "><a href="#" id="Categories">Categories</a></li>
+                <li class=" animate__animated "><a href="#"id="Area">Area</a></li>
+                <li class=" animate__animated "><a href="#" id="Ingredients">Ingredients</a></li>
+                <li class=" animate__animated  "><a href="#" id="Contact">Contact Us</a></li>
+            </ul>
+            <div class=" text-white p-2 position-absolute bottom-0 ">
+                    <ul class="d-flex align-items-center justify-content-start ">
+                        <i class="fa-brands fa-facebook ms-2 ii"></i>
+                        <i class="fa-brands fa-twitter ms-2 ii"></i>
+                        <i class="fa-solid fa-globe p-2 ii"></i>
+                    </ul>
+                <p>Copyright Â© 2019 All Rights<br> Reserved.</p>
+            </div>
+        </div>
+        <div class="brand bg-white py-3  text-center ">
+            <img src="./img/img01.png" class="img-fluid ms-1">
+            <i class="fa-solid fa-bars fa-2x ii iii"></i>
+            <!-- <i class="fa-solid fa-xmark fa-2x ii" ></i>  -->
+            <div class="d-flex flex-column">
+                <i class="fa-solid fa-globe p-2 ii"></i>
+                <i class="fa-solid fa-share-nodes ii"></i>
+            </div>
+        </div>
+
+    </div>
+    <div class="container p-5" id="home">
+        <div class="row g-4 ">
+
+        </div>
+        <div class="row g-4 p-3 roww">
+
+        </div>
+
+    </div>
+    <div class="container p-5 vh-100" id="search">
+        <div class="  ">
+            <div class="row m-4 ">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="name" placeholder="Search By Name">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="letter" placeholder="Search By Letter" maxlength="1">
+                    </div>
+            </div>
+            <div class="row row9">
+
+            </div>
+            <div class="row g-4 row2" >
+
+            </div>
+        </div>
+    </div>
+    <div class="container p-5 " id="categories">
+        <div class="row g-4">
+
+        </div>
+        <div class="row g-4 row5">
+
+        </div>
+        <div class="row g-4 m-5 row55">
+
+        </div>
+
+    </div>
+    <div class="container p-5 vh-100" id="area">
+        <div class="row g-4"></div>
+        <div class="row g-4 row4"></div>
+        <div class="row g-4 p-3 row7"></div>
+    </div>
+    <div class="container p-5 " id="ingredients" >
+        <div class="row g-4"></div>
+        <div class="row g-4 row3"></div>
+        <div class="row g-4 row8 mt-5"></div>
+
+    </div>
+    <div class="container p-5 vh-100 " id="contact">
+        <div>
+            <form class="p-5">
+                <div class="row g-3 px-5">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="name2" placeholder="Enter Your Name" >
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="pname">Special characters and numbers not allowed</p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="pemail">Email not valid *exemple@yyy.zzz</p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter Your Phone">
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="pphone">Enter valid Phone Number</p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="number" class="form-control" id="age" placeholder="Enter Your Age">
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="page">Enter valid age</p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="pass" placeholder="Enter Your password">
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="ppass">Enter valid password *Minimum eight characters, at least one letter and one number:*</p>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="repass" placeholder="Repassword">
+                        <p class="py-3 px-2 rounded-2 mt-2 d-none" id="prepass">Enter valid repassword</p>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger text-white mt-3 m-auto d-flex" id="sub" disabled="true">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script src="js/all.min.js"></script> -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
+
