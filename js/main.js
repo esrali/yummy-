@@ -22,7 +22,6 @@ $(".fa-bars").click(function(){
     }
 })
 
-
 /* -------------------------------home ------------------------------- */
 let api;
 let apiData;
@@ -34,8 +33,8 @@ async function getMeal(){
     display();
     $(".loadingDiv").fadeOut(300);
 }
-
 getMeal();
+
 let all;
 function display(){
     all="";
@@ -52,10 +51,11 @@ function display(){
                     </div>
                 `
     }
-    document.querySelector("#home .row").innerHTML=all;
+    document.querySelector(".global .row1").innerHTML=all;
     
 }
 let apiIdData;
+
 function getDetails(ind){
     let getId=apiData.meals[ind].idMeal;
     $(".loadingDiv").fadeIn(300);
@@ -71,7 +71,9 @@ function getDetails(ind){
 }
 
 function displayDetailsById(){
-    document.querySelector("#home .row").innerHTML="";
+    document.querySelector(".global .row1").innerHTML="";
+    document.querySelector(".global .row5").innerHTML="";
+    document.querySelector(".global .row55").innerHTML="";
     let one="";
     for(let i=0 ; i<apiIdData.meals.length;i++)
     {
@@ -108,11 +110,9 @@ function displayDetailsById(){
     </div>
         `
     }
-    document.querySelector("#home .roww").innerHTML=one;
+    document.querySelector(".global .row5").innerHTML=one;
 
 }
-
-
 /*-------------------------------loading screen------------------------------------ */
 $(document).ready(function(){
     $(".loadingDiv").fadeOut(1000);
@@ -123,7 +123,7 @@ $(document).ready(function(){
 let apiS;
 let apiDataS;
 $("#Search").click(function(){
-    $("#home,#categories,#area,#ingredients,#contact").css("display","none");
+    $("#contact").css("display","none");
     $("#search").css("display","block");
     $(".sidebar").animate({left:`-${ulWidth}`} ,500);
     $(".iii").removeClass("fa-xmark");
@@ -224,7 +224,6 @@ function displayNameDetails(){
         
     })
 }
-
 /*search by letter */
 let apil;
 let apiDatal;
@@ -334,9 +333,9 @@ async function getCat(){
     displayCat();
     $(".loadingDiv").fadeOut(300);
 }
-getCat();
 let carton
 function displayCat(){
+    document.querySelector(".global .row1").innerHTML="";
     carton="";
     for(let i=0;i<catData.categories.length;i++)
     {
@@ -346,18 +345,21 @@ function displayCat(){
                         <img src=${catData.categories[i].strCategoryThumb} class="img-fluid rounded-2">
                         <div class="layer position-absolute text-center ">
                             <h3 class="pt-1">${catData.categories[i].strCategory}</h3>
-                            <p style="letter-spacing:-1px;">${catData.categories[i].strCategoryDescription.split("").slice(0,100).join(" ")}</p>
+                            <p style="letter-spacing:-1px;">${catData.categories[i].strCategoryDescription.split(" ").slice(0,100).join(" ")}</p>
                         </div>
                     </div>
                 </div>
                 `
     }
-    document.querySelector("#categories .row").innerHTML=carton;
+    
+    document.querySelector(".global .row5").innerHTML=carton;
     
 }
+
 $("#Categories").click(function(){
-    $("#home,#search,#area,#ingredients,#contact").css("display","none");
-    $("#categories").css("display","block");
+    // $("#home,#search,#area,#ingredients,#contact").css("display","none");
+    // $("#categories").css("display","block");
+    getCat();
     $(".sidebar").animate({left:`-${ulWidth}`} ,500);
     $(".iii").removeClass("fa-xmark");
     $(".iii").addClass("fa-bars");
@@ -378,8 +380,9 @@ function getCatDetails(index2){
     filterCat();
 }
 function displayFilterCat(){
-    document.querySelector("#categories .row").innerHTML="";
-    document.querySelector("#categories .row55").innerHTML="";
+    document.querySelector(".global .row1").innerHTML="";
+    document.querySelector(".global .row55").innerHTML="";
+    document.querySelector(".global .row5").innerHTML="";
     let car="";
     for(let i=0 ; i<filterCatData.meals.length;i++)
     {
@@ -394,76 +397,34 @@ function displayFilterCat(){
                 </div>
         `
     }
-    document.querySelector("#categories .row5").innerHTML=car;
+    document.querySelector(".global .row5").innerHTML=car;
 
         $("#Categories").click(function(){
-            document.querySelector("#categories .row5").innerHTML="";
-            document.querySelector("#categories .row").innerHTML=carton;
-            document.querySelector("#categories .row55").innerHTML="";
+            document.querySelector(".global .row5").innerHTML="";
+            document.querySelector(".global .row1").innerHTML=carton;
+            document.querySelector(".global .row55").innerHTML="";
         })
 
 }
 
 //details one cat
-let response;
 function getDet(inde){
     let getIdCat=filterCatData.meals[inde].idMeal;
     async function detCat(){
         $(".loadingDiv").fadeIn(300);
         let apiIdCat= await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${getIdCat}`)
-        response= await apiIdCat.json();
-        displayCatOne();
+        apiIdData= await apiIdCat.json();
+        displayDetailsById();
         $(".loadingDiv").fadeOut(300);
     }
     detCat();
-}
-function displayCatOne(){
-    document.querySelector("#categories .row5").innerHTML="";
-    let two="";
-    for(let i=0 ; i<response.meals.length;i++)
-    {
-        two+=`
-        <div class="col-lg-4">
-        <div class="rounded-2">
-            <img src=${response.meals[i].strMealThumb} class="img-fluid rounded-2" >
-            <h2 class="text-white">${response.meals[i].strMeal}</h2>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="text-white">
-            <h1>Instructions</h1>
-            <p>${response.meals[i].strInstructions}</p>
-                <h3>Area : ${response.meals[i].strArea}</h3>
-                <h3>Category : ${response.meals[i].strCategory}</h3>
-                <h3>Recipes :</h3>
-                <ul class="d-flex flex-wrap rounded-2" style="list-style-type: none;">
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure1} ${response.meals[i].strIngredient1}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure2} ${response.meals[i].strIngredient2}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure3} ${response.meals[i].strIngredient3}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure4} ${response.meals[i].strIngredient4}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure5} ${response.meals[i].strIngredient5}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure6} ${response.meals[i].strIngredient6}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response.meals[i].strMeasure7} ${response.meals[i].strIngredient7}</li>
-                </ul>
-                <h3>tages :</h3>
-                <ul class="list-unstyled d-flex g-3 flex-wrap">
-                    <li class="alert alert-danger m-2 p-1">${response.meals[i].strTags}</li>
-                </ul>
-                <a href="${response.meals[i].strSource}" target="_blank"><button class="btn btn-success">Source </button></a>
-                <a href="${response.meals[i].strYoutube}" target="_blank"><button class="btn btn-danger">YouTube </button></a>
-        </div>
-    </div>
-        `
-    }
-    document.querySelector("#categories .row55").innerHTML=two;
 }
 /*-------------------------------------------area---------------------------------------- */
 let area;
 let areaData;
 //get area
 $("#Area").click(function(){
-    $("#home,#search,#categories,#ingredients,#contact").css("display","none");
-    $("#area").css("display","block");
+    getArea();
     $(".sidebar").animate({left:`-${ulWidth}`} ,500);
     $(".iii").removeClass("fa-xmark");
     $(".iii").addClass("fa-bars");
@@ -477,9 +438,12 @@ async function getArea(){
     displayArea();
     $(".loadingDiv").fadeOut(300);
 }
-getArea();
+
 let hsala;
 function displayArea(){
+    document.querySelector(".global .row1").innerHTML="";
+    document.querySelector(".global .row5").innerHTML="";
+    document.querySelector(".global .row55").innerHTML="";
     hsala="";
     for(let i=0;i<areaData.meals.length;i++)
     {
@@ -492,9 +456,8 @@ function displayArea(){
             </div>
         `
     }
-    document.querySelector("#area .row").innerHTML=hsala;
+    document.querySelector(".global .row1").innerHTML=hsala;
 }
-
 //get area details
 let filterAreaData;
 function getAreaDetails(index1){
@@ -512,8 +475,9 @@ function getAreaDetails(index1){
 }
 
 function displayFilterArea(){
-    document.querySelector("#area .row").innerHTML="";
-    document.querySelector("#area .row7").innerHTML="";
+    document.querySelector(".global .row1").innerHTML="";
+    document.querySelector(".global .row5").innerHTML="";
+    document.querySelector(".global .row55").innerHTML="";
     let cart="";
     for(let i=0 ; i<filterAreaData.meals.length;i++)
     {
@@ -528,23 +492,23 @@ function displayFilterArea(){
                 </div>
         `
     }
-    document.querySelector("#area .row4").innerHTML=cart;
+    document.querySelector(".global .row1").innerHTML=cart;
 
         $("#Area").click(function(){
-            document.querySelector("#area .row4").innerHTML="";
-            document.querySelector("#area .row").innerHTML=hsala;
-            document.querySelector("#area .row7").innerHTML="";
+            document.querySelector(".global .row55").innerHTML="";
+            document.querySelector(".global .row1").innerHTML=hsala;
+            document.querySelector(".global .row5").innerHTML="";
         })
 }
 // show one meal details
-let response1;
+
 function showArea(index3){
     let areaId=filterAreaData.meals[index3].idMeal;
     async function showArea1(){
         $(".loadingDiv").fadeIn(300);
         let apiIdArea= await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${areaId}`)
-        response1= await apiIdArea.json();
-        displayArea2();
+        apiIdData= await apiIdArea.json();
+        displayDetailsById();
         
     $(".loadingDiv").fadeOut(300);
     }
@@ -552,57 +516,15 @@ function showArea(index3){
 
 }
 
-function displayArea2(){
-    document.querySelector("#area .row4").innerHTML="";
-    let three="";
-    for(let i=0 ; i<response1.meals.length;i++)
-    {
-        three+=`
-        <div class="col-lg-4">
-        <div class="rounded-2">
-            <img src=${response1.meals[i].strMealThumb} class="img-fluid rounded-2" >
-            <h2 class="text-white">${response1.meals[i].strMeal}</h2>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="text-white">
-            <h1>Instructions</h1>
-            <p>${response1.meals[i].strInstructions}</p>
-                <h3>Area : ${response1.meals[i].strArea}</h3>
-                <h3>Category : ${response1.meals[i].strCategory}</h3>
-                <h3>Recipes :</h3>
-                <ul class="d-flex flex-wrap rounded-2" style="list-style-type: none;">
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure1} ${response1.meals[i].strIngredient1}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure2} ${response1.meals[i].strIngredient2}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure3} ${response1.meals[i].strIngredient3}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure4} ${response1.meals[i].strIngredient4}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure5} ${response1.meals[i].strIngredient5}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure6} ${response1.meals[i].strIngredient6}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response1.meals[i].strMeasure7} ${response1.meals[i].strIngredient7}</li>
-                </ul>
-                <h3>tages :</h3>
-                <ul class="list-unstyled d-flex g-3 flex-wrap">
-                    <li class="alert alert-danger m-2 p-1">${response1.meals[i].strTags}</li>
-                </ul>
-                <a href="${response1.meals[i].strSource}" target="_blank"><button class="btn btn-success">Source </button></a>
-                <a href="${response1.meals[i].strYoutube}" target="_blank"><button class="btn btn-danger">YouTube </button></a>
-        </div>
-    </div>
-        `
-    }
-    document.querySelector("#area .row7").innerHTML=three;
-}
 /*----------------------------------------Ingredients---------------------------------------------------- */
 let apiIng;
 let ingData;
 //get ingrediant
 $("#Ingredients").click(function(){
-    $("#home,#search,#categories,#area,#contact").css("display","none");
-    $("#ingredients").css("display","block");
+    getIngredients();
     $(".sidebar").animate({left:`-${ulWidth}`} ,500);
     $(".iii").removeClass("fa-xmark");
     $(".iii").addClass("fa-bars");
-
 })
 async function getIngredients(){
     $(".loadingDiv").fadeIn(300);
@@ -612,11 +534,12 @@ async function getIngredients(){
     
     $(".loadingDiv").fadeOut(300);
 }
-getIngredients();
-
 //get details ingrediant
 let s;
 function displayIng(){
+    document.querySelector(".global .row1").innerHTML=s;
+    document.querySelector(".global .row5").innerHTML=s;
+    document.querySelector(".global .row55").innerHTML=s;
     s="";
     for(let i=0;i<20;i++)
     {
@@ -630,27 +553,25 @@ function displayIng(){
             </div>
         `
     }
-    document.querySelector("#ingredients .row").innerHTML=s;
+    document.querySelector(".global .row1").innerHTML=s;
 }
 let filterIngData;
 function getIngDetails(index){
     let ingName = ingData.meals[index].strIngredient;
-
     async function filterIng(){
         $(".loadingDiv").fadeIn(300);
         let filterIngApi= await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingName}`);
         filterIngData= await filterIngApi.json();
-        console.log(filterIngData);
         displayFilterIng();
-        
     $(".loadingDiv").fadeOut(300);
     }
     filterIng();
 }
 function displayFilterIng(){
 
-    document.querySelector("#ingredients .row").innerHTML="";
-    document.querySelector("#ingredients .row8").innerHTML="";
+    document.querySelector(".global .row1").innerHTML="";
+    document.querySelector(".global .row5").innerHTML="";
+    document.querySelector(".global .row55").innerHTML="";
     let carto="";
     for(let i=0 ; i<filterIngData.meals.length;i++)
     {
@@ -665,75 +586,33 @@ function displayFilterIng(){
                 </div>
         `
     }
-    document.querySelector("#ingredients .row3").innerHTML=carto;
+    document.querySelector(".global .row1").innerHTML=carto;
 
         $("#Ingredients").click(function(){
-            document.querySelector("#ingredients .row3").innerHTML="";
-            document.querySelector("#ingredients .row").innerHTML=s;
-            document.querySelector("#ingredients .row8").innerHTML="";
+            document.querySelector(".global .row1").innerHTML="";
+            document.querySelector("#ingredients .row5").innerHTML=s;
+            document.querySelector(".global .row55").innerHTML="";
         })
 
 }
 
 //show one ingrediant
-
-let response2;
 function showIng(index4){ 
     let ingId=filterIngData.meals[index4].idMeal;
     async function showIng1(){
         $(".loadingDiv").fadeIn(300);
         let apiIdIng= await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ingId}`)
-        response2= await apiIdIng.json();
-        displayIng2();
+        apiIdData= await apiIdIng.json();
+        displayDetailsById();
         
     $(".loadingDiv").fadeOut(300);
     }
     showIng1()
 }
-function displayIng2(){
-    document.querySelector("#ingredients .row3").innerHTML="";
-    let four="";
-    for(let i=0 ; i<response2.meals.length;i++)
-    {
-        four+=`
-        <div class="col-lg-4">
-        <div class="rounded-2">
-            <img src=${response2.meals[i].strMealThumb} class="img-fluid rounded-2" >
-            <h2 class="text-white">${response2.meals[i].strMeal}</h2>
-        </div>
-    </div>
-    <div class="col-lg-8">
-        <div class="text-white">
-            <h1>Instructions</h1>
-            <p>${response2.meals[i].strInstructions}</p>
-                <h3>Area : ${response2.meals[i].strArea}</h3>
-                <h3>Category : ${response2.meals[i].strCategory}</h3>
-                <h3>Recipes :</h3>
-                <ul class="d-flex flex-wrap rounded-2" style="list-style-type: none;">
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure1} ${response2.meals[i].strIngredient1}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure2} ${response2.meals[i].strIngredient2}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure3} ${response2.meals[i].strIngredient3}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure4} ${response2.meals[i].strIngredient4}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure5} ${response2.meals[i].strIngredient5}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure6} ${response2.meals[i].strIngredient6}</li>
-                    <li class="p-1 m-2 rounded-2"style="background-color: #CFF4FC; color: #055174;">${response2.meals[i].strMeasure7} ${response2.meals[i].strIngredient7}</li>
-                </ul>
-                <h3>tages :</h3>
-                <ul class="list-unstyled d-flex g-3 flex-wrap">
-                    <li class="alert alert-danger m-2 p-1">${response2.meals[i].strTags}</li>
-                </ul>
-                <a href="${response2.meals[i].strSource}" target="_blank"><button class="btn btn-success">Source </button></a>
-                <a href="${response2.meals[i].strYoutube}" target="_blank"><button class="btn btn-danger">YouTube </button></a>
-        </div>
-    </div>
-        `
-    }
-    document.querySelector("#ingredients .row8").innerHTML=four;
-}
 /*------------------------------------------------contact us-------------------------------------------------------------- */
 
 $("#Contact").click(function(){
-    $("#home,#search,#categories,#area,#ingredients").css("display","none");
+    $("#search,.global").css("display","none");
     $("#contact").css("display","flex");
     $(".sidebar").animate({left:`-${ulWidth}`} ,500);
     $(".iii").removeClass("fa-xmark");
@@ -760,7 +639,6 @@ let parPhone=document.getElementById("pphone");
 let parAge=document.getElementById("page");
 let parPass=document.getElementById("ppass");
 let parRepass=document.getElementById("prepass");
-
 
 let nameTouch=false;
 let emailTouch=false;
@@ -792,7 +670,6 @@ function validationRepass(){
     }
 }
 
-
 nameInput.addEventListener("focus",function(){
     nameTouch=true;
 })
@@ -811,7 +688,6 @@ $(passInput).focus(function () {
 $(repassInput).focus(function () { 
     repassTouch=true;
 });
-
 
 function validation(){
     if(nameTouch)
@@ -893,7 +769,6 @@ function validation(){
         document.getElementById("sub").setAttribute("disabled" , "true")
     }
 }
-
 $("#contact input").keyup(function(){
     validation();
 })
